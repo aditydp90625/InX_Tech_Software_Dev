@@ -107,13 +107,16 @@ fuel_allocation_factor_mass = 0.24
 fuel_allocation_factor_vol = 0.24
 
 fuel_mass_limit_kg = fuel_allocation_factor_mass * AUV_mass_kg
-fuel_vol_limit_m = fuel_allocation_factor_vol * AUV_vol_m3
+fuel_vol_limit_m3 = fuel_allocation_factor_vol * AUV_vol_m3
+
+print(f"fuel mass limit kg: {fuel_mass_limit_kg}" )
+print(f"fuel_vol_limit_m3: {fuel_vol_limit_m3}")
 
 
 ######################################
 ## Alternative Capacity Calculations ##
 ######################################
-kg_of_h2_volumetric_limit = fuel_vol_limit_m/space_required_per_kg_of_h2_and_o2_in_m3
+kg_of_h2_volumetric_limit = fuel_vol_limit_m3/space_required_per_kg_of_h2_and_o2_in_m3
 kg_of_h2_gravimetric_limit = fuel_mass_limit_kg/weight_required_per_kg_of_h2_and_o2_in_kg
 
 if kg_of_h2_gravimetric_limit>kg_of_h2_volumetric_limit:
@@ -123,10 +126,26 @@ else:
     print("weight is limiting factor")
     final_h2_mass_kg = kg_of_h2_gravimetric_limit
 
+final_h2_system_vol_m3 = final_h2_mass_kg/paper_volumetric_density_kg_h2_per_m3_at_700bar
+final_h2_system_mass_kg = final_h2_mass_kg/paper_gravimetric_density_kg_h2_per_kg_system_at_700bar
 
-print(f"Hydrogen mass (in kg) onboard: {final_h2_mass_kg}")
+final_o2_mass_kg = final_h2_mass_kg*8 #This is a relatively rough approx
+final_o2_system_mass_kg = final_o2_mass_kg/paper_gravimetric_density_kg_o2_per_kg_system_at_153bar
+final_o2_system_vol_m3 = final_o2_mass_kg/paper_volumetric_density_kg_o2_per_m3_at_153bar
+
+print(f"Hydrogen mass onboard (kg): {final_h2_mass_kg}")
+print(f"Oxygen Mass onboard (kg): {final_o2_mass_kg}")
+
+print(f"H2 system mass: {final_h2_system_mass_kg}")
+print(f"H2 system volume:  {final_h2_system_vol_m3}")
+
+print(f"O2 system mass: {final_o2_system_mass_kg}")
+print(f"O2 system vol: {final_o2_system_vol_m3}")
+
 total_energy_capacity_kWh = final_h2_mass_kg * 0.5 * 33
+
 print(f"Total energy capacity (kWh): {total_energy_capacity_kWh}")
+
 
 ######################################
 ## Capacity Calculations ##
