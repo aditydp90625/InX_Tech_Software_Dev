@@ -7,7 +7,7 @@ import math as math
 h2_tank_pressure_Pa = 500*100000
 h2_tank_temperature_K = 273.15
 
-o2_tank_pressure_Pa = 200*100000
+o2_tank_pressure_Pa = 230*100000
 o2_tank_temperature_K = 273.15
 
 
@@ -24,8 +24,10 @@ o2_tank_temperature_K = 273.15
 ideal_gas_constant = 8.3144598 #using mol, Pa, Kelvin, and m3
 #All the calculations below are done with reference to 1 h2 mole as then you can account for o2 only requiring 0.5 moles in the reaction
 h2_vol_density_m3_per_h2_mol = (ideal_gas_constant * h2_tank_temperature_K)/h2_tank_pressure_Pa
-o2_vol_density_m3_per_h2_mol = 0.5*(ideal_gas_constant * h2_tank_temperature_K)/h2_tank_pressure_Pa #0.5 multiplier because half the h2 moles are required
+o2_vol_density_m3_per_h2_mol = 0.5*(ideal_gas_constant * o2_tank_temperature_K)/o2_tank_pressure_Pa #0.5 multiplier because half the h2 moles are required
 total_vol_density_m3_per_h2_mol = h2_vol_density_m3_per_h2_mol + o2_vol_density_m3_per_h2_mol
+
+
 print(total_vol_density_m3_per_h2_mol)
 
 ## Gravimetric Density Calculations ##
@@ -86,7 +88,7 @@ else:
     final_h2_moles = h2_moles_from_vol_limit
 
 final_h2_mass_kg = final_h2_moles * 2.01568 * 0.001
-final_o2_mass_kg = final_h2_moles * 0.5 * 31.999 * 0.001
+final_o2_mass_kg = final_h2_moles * 0.5 * 31.999 * 0.001 
 
 final_h2_vol_m3 = (final_h2_moles * ideal_gas_constant * h2_tank_temperature_K)/h2_tank_pressure_Pa
 final_o2_vol_m3 = (final_h2_moles * 0.5 * ideal_gas_constant * o2_tank_temperature_K)/o2_tank_pressure_Pa
